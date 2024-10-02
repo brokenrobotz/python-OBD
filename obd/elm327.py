@@ -162,7 +162,8 @@ class ELM327:
             return
 
         # ------------------------- ATH1 (headers ON) -------------------------
-        r = self.__send(b"ATH1")
+        ath1_delay = 1 if portname.startswith("/dev/rfcomm") else None
+        r = self.__send(b"ATH1", delay=ath1_delay)
         if not self.__isok(r):
             self.__error("ATH1 did not return 'OK', or echoing is still ON")
             return
